@@ -31,6 +31,7 @@
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     border: 2px;
+    overflow-x: none;
   }
 
   .custom-card:hover {
@@ -187,6 +188,7 @@
     .custom-card {
       margin-bottom: 16px;
       padding: 8px;
+      overflow-x: auto;
     }
 
     .custom-panels {
@@ -200,6 +202,7 @@
     .invoice-table {
       max-width: 100%;
       padding: 10px;
+      overflow-x: auto;
     }
 
     .home-invoice-content-row {
@@ -210,13 +213,5 @@
       margin: 16px 0;
     }
 
-    .invoice-table {
-      overflow-x: auto;
-    }
-
-    .custom-card {
-      width: 100vh;
-      overflow-x: auto;
-    }
   }
 }
