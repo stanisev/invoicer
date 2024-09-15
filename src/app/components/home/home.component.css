@@ -209,5 +209,14 @@
     .divider {
       margin: 16px 0;
     }
+
+    .invoice-table {
+      overflow-x: auto;
+    }
+
+    .custom-card {
+      width: 100vh;
+      overflow-x: auto;
+    }
   }
 }
