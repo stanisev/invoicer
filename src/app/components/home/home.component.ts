@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {ClarityModule, ClrIconModule, ClrInputModule, ClrSelectModule} from '@clr/angular';
+import { ClarityModule, ClrIconModule, ClrInputModule, ClrSelectModule } from '@clr/angular';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {DatePipe, NgForOf, NgIf, TitleCasePipe} from '@angular/common';
+import { DatePipe, NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import { CurrenciesService } from '../../services/currencies.service';
-import {PanelComponent} from "../panel/panel.component";
-import {ClientsService} from "../../services/clients.service";
-import {Client} from "../../models/client";
-import {TitlecaseWithSpacesPipe} from "../../pipes/titlecase-with-spaces.pipe";
-import {InvoiceComponent} from "../invoice/invoice.component";
-import html2canvas from "html2canvas";
+import { PanelComponent } from '../panel/panel.component';
+import { ClientsService } from '../../services/clients.service';
+import { Client} from '../../models/client';
+import { TitlecaseWithSpacesPipe } from '../../pipes/titlecase-with-spaces.pipe';
+import { InvoiceComponent } from '../invoice/invoice.component';
+import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import {CompanyService} from "../../services/company.service";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import { CompanyService } from '../../services/company.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-home',

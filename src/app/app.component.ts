@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
 import '@cds/core/icon/register.js';
 import { ClarityIcons, contractIcon, cogIcon, usersIcon, fileGroupIcon } from '@cds/core/icon';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,20 @@ import { ClarityIcons, contractIcon, cogIcon, usersIcon, fileGroupIcon } from '@
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  companyName = 'A CompanyModel Name';
+  companyName = 'A Company Name';
+  isMobileView: boolean = false;
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
     this.loadIcons();
     this.assignCompanyName();
+
+    // Subscribe to screen size changes
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobileView = result.matches;
+      });
   }
 
   private loadIcons(): void {

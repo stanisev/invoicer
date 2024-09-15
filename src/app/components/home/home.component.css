@@ -162,4 +162,52 @@
     background: rgba(92, 113, 94, 0.2)
   }
 
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    form {
+      width: 100%;
+    }
+
+    .home-content {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .home-invoice-content {
+      width: 100%;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .custom-input-label {
+      font-size: 16px;
+      margin: 8px 16px;
+    }
+
+    .custom-card {
+      margin-bottom: 16px;
+      padding: 8px;
+    }
+
+    .custom-panels {
+      flex-direction: column;
+    }
+
+    .custom-form {
+      max-width: 100%;
+    }
+
+    .invoice-table {
+      max-width: 100%;
+      padding: 10px;
+    }
+
+    .home-invoice-content-row {
+      flex-direction: column;
+    }
+
+    .divider {
+      margin: 16px 0;
+    }
+  }
 }
