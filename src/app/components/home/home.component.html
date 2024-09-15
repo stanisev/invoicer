@@ -43,12 +43,23 @@
       </div>
     </div>
 
+    <div class="custom-card" *ngIf="client && invoiceNumber">
+      <label class="custom-input-label">Manage Service(s)</label>
+      <div class="custom-sub-card">
+        <app-service-data
+        (servicesChanged)="handleServicesChanged($event)">
+
+        </app-service-data>
+      </div>
+    </div>
+
 
     <div class="custom-card">
       <label class="custom-input-label">Select a currency</label>
       <div class="custom-sub-card">
         <clr-select-container>
           <select clrSelect formControlName="currencyControl" required>
+            <option value="" disabled selected>{{ currencies[0].name }} [{{ currencies[0].id }}]</option>
             <option *ngFor="let currency of currencies" [value]="currency.id" [disabled]="currency.disabled">{{ currency.name }} [{{ currency.id }}]</option>
           </select>
           <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
@@ -77,7 +88,7 @@
                      [panelLabelSize]="16"
                      [panelDataSize]="12"
                      [panelLabelFontBold]="300"
-                     [panelData]="currentDate | date: 'short'">
+                     [panelData]="currentDate">
         </app-invoice>
 
         <div class="divider"></div>
@@ -116,7 +127,7 @@
       </div>
     </div>
 
-    <div class="invoice-table" *ngIf="client">
+    <div class="invoice-table" *ngIf="client && providedServices.length > 0">
       <table class="table">
         <thead>
         <tr>
@@ -127,11 +138,41 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let service of client.services">
+        <tr *ngFor="let service of providedServices">
           <td>{{ service.name }}</td>
           <td>{{ service.quantity }}</td>
-          <td>{{ service.unitPrice }} {{ this.currency }}</td>
-          <td>{{ service.quantity * service.unitPrice }} {{ this.currency }}</td>
+          <td>{{ service.unitPrice }} {{ this.currency | currencySymbol }}</td>
+          <td>{{ service.quantity * service.unitPrice }} {{ this.currency | currencySymbol }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Base Cost: </td>
+          <td></td>
+          <td></td>
+          <td class="tr-text-right">{{ totalPrice}} {{ this.currency | currencySymbol }}</td>
+        </tr>
+        <tr >
+          <td>Tax (20%): </td>
+          <td>        </td>
+          <td>        </td>
+          <td class="tr-text-right">{{ totalPrice * 0.2 }} {{ this.currency | currencySymbol }}</td>
+        </tr>
+        <tr>
+          <td>Total Cost: </td>
+          <td></td>
+          <td></td>
+          <td class="tr-text-right">{{  totalPrice + totalPrice * 0.2 }} {{ this.currency | currencySymbol }}</td>
         </tr>
         </tbody>
       </table>

@@ -12,6 +12,11 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { CompanyService } from '../../services/company.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import {CurrencySymbolPipe} from "../../pipes/currency-symbol.pipe";
+import {Currency} from "../../models/currency";
+import {ServiceDataComponent} from "../service-data/service-data.component";
+import {Service} from "../../models/service.model";
+import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'app-home',
@@ -31,7 +36,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     DatePipe,
     ClarityModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    CurrencySymbolPipe,
+    ServiceDataComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -44,7 +51,7 @@ export class HomeComponent implements OnInit {
   });
 
   currencies: any;
-  currency: string = '';
+  currency: any;
 
   clients: Client[] = [];
   client!: Client;
@@ -55,7 +62,11 @@ export class HomeComponent implements OnInit {
 
   // Form Values
   invoiceNumber: any = 0;
-  currentDate: Date = new Date();
+  currentDate: string = new Date().toLocaleDateString();
+
+  // Provided services
+  providedServices: Service[] = [];
+  totalPrice = 0;
 
   constructor(
     private currenciesService: CurrenciesService,
@@ -64,7 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.currentDate = new Date();
+    this.currentDate = new Date().toLocaleDateString();
     this.buildCurrencies();
 
     await this.getClients();
@@ -92,7 +103,9 @@ export class HomeComponent implements OnInit {
 
   buildCurrencies(): void {
     this.currenciesService.buildCurrencies().subscribe(
-      currencies => this.currencies = currencies
+      currencies => {
+       this.currencies = currencies;
+      }
     );
   }
 
@@ -145,25 +158,52 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  handleServicesChanged(newServices: any[]): void {
+    (this.providedServices as any) = [...this.providedServices, ...newServices];
+    this.totalPrice = 0;
+    this.providedServices.forEach(service =>
+      {
+        this.totalPrice += (service.unitPrice * service.quantity);
+        const serviceId = uuidv4();
+        service = {...service, id: serviceId, invoiceNumber: this.invoiceNumber}
+        this.clientsService.addServiceToClient(this.client.taxNumber, service);
+      }
+    )
+  }
+
   generatePDF() {
     const data = document.getElementById('pdf-content');
 
     if (data) {
-      // Prompt user to enter a custom file name
+      data.classList.add('pdf-layout');
       const fileName = prompt('Enter a name for the PDF file:', 'invoice');
 
       html2canvas(data).then(canvas => {
-        const imageWidth = 210;
-        const imageHeight = canvas.height * imageWidth / canvas.width;
+        const pdf = new jsPDF({
+          orientation: 'p',
+          unit: 'mm',
+          format: 'a4'
+        });
 
-        const contentDataURL = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-        pdf.addImage(contentDataURL, 'PNG', 0, 0, imageWidth, imageHeight);
+        const imgWidth = 210;
+        const pageHeight = 297;
 
-        // Use the custom file name entered by the user
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const scalingFactor = imgHeight > pageHeight ? pageHeight / imgHeight : 1;
+
+        const scaledWidth = imgWidth * scalingFactor;
+        const scaledHeight = imgHeight * scalingFactor;
+
+
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, scaledWidth, scaledHeight);
+
+
         pdf.save(`${fileName}.pdf`);
+
+        data.classList.remove('pdf-layout');
       });
     }
   }
 
+  protected readonly InvoiceComponent = InvoiceComponent;
 }

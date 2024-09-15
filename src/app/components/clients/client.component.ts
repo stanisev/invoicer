@@ -22,6 +22,7 @@ import {Service} from "../../models/service.model";
 })
 export class ClientComponent {
   modalOpen = false;
+  serviceHistoryModel = false;
   addClientForm = new FormGroup({
     companyName: new FormControl('', Validators.required),
     taxNumber: new FormControl('', Validators.required),
@@ -32,6 +33,7 @@ export class ClientComponent {
   })
   isSubmitting = false;
   clients: Client[] = [];
+  services: Service[] | undefined = [];
 
   constructor(private clientService: ClientsService) {
   }
@@ -65,14 +67,6 @@ export class ClientComponent {
         await this.clientService.updateClient(client);
       } else {
         await this.clientService.addClient(client);
-        const newService: Service = {
-          id: 'service123',
-          name: 'Consulting',
-          quantity: 10,
-          unitPrice: 150,
-          date: '2024-09-15'
-        };
-        await this.clientService.addServiceToClient(client.taxNumber, newService);
       }
       await this.getClients();
     } catch (error) {
@@ -94,6 +88,16 @@ export class ClientComponent {
   async deleteClient(client: Client): Promise<void> {
     await this.clientService.deleteClient(client.taxNumber);
     await this.getClients();
+  }
+
+  openServiceHistory(client: Client): void {
+    this.services = this.findClient(client.taxNumber)?.services;
+    this.serviceHistoryModel = true;
+
+  }
+
+  findClient(taxNumber: string): Client | undefined {
+    return this.clients.find(client => client.taxNumber === taxNumber);
   }
 }
 

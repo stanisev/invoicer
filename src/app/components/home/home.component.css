@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
 
+    padding: 8px;
     margin: 4px;
   }
 
@@ -20,6 +21,7 @@
     display: flex;
     flex-direction: column;
 
+    padding: 8px;
     margin: 4px;
   }
 
@@ -42,7 +44,6 @@
   .custom-sub-card {
     border-radius: 10px;
     background: #fafafa;
-    height: 64px;
     margin: 16px 16px 32px;
   }
 
@@ -156,11 +157,27 @@
     text-align: left;
   }
 
+  .tr-text-right {
+    text-align: right;
+  }
+
 
   .divider {
     margin: 32px;
     height: 1px;
     background: rgba(92, 113, 94, 0.2)
+  }
+
+  pdf-layout {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+  }
+
+  .pdf-layout .home-content {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
   }
 
   /* Mobile Styles */
@@ -211,6 +228,18 @@
 
     .divider {
       margin: 16px 0;
+    }
+
+    .pdf-layout {
+      display: flex;
+      flex-direction: row;
+      width: 600px;
+    }
+
+    .pdf-layout .home-content {
+      display: flex;
+      flex-direction: row;
+      width: 600px;
     }
 
   }

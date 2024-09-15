@@ -1,1 +1,56 @@
-<p>service-data works!</p>
+
+<button type="button" class="btn" (click)="openServiceModal(true)">Add a Service</button>
+<clr-datagrid>
+  <clr-dg-column>Service Name</clr-dg-column>
+  <clr-dg-column>Quantity</clr-dg-column>
+  <clr-dg-column>Unit Price</clr-dg-column>
+  <clr-dg-column>Total</clr-dg-column>
+
+  <clr-dg-row *ngFor="let service of services">
+    <clr-dg-cell>{{ service.name }}</clr-dg-cell>
+    <clr-dg-cell>{{ service.quantity }}</clr-dg-cell>
+    <clr-dg-cell>{{ service.unitPrice }}</clr-dg-cell>
+    <clr-dg-cell>{{ service.quantity * service.unitPrice }}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{ services.length }} services</clr-dg-footer>
+</clr-datagrid>
+
+<clr-modal [(clrModalOpen)]="serviceModal">
+  <h3 class="modal-title">Service</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="serviceFormGroup" clrLayout="horizontal" clrLabelSize="4">
+      <clr-input-container>
+        <label class="custom-input-label">Enter Service Name</label>
+        <input
+          clrInput type="text"
+          formControlName="name"
+          id="name"
+          placeholder="Service Name"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter Service Quantity</label>
+        <input
+          clrInput type="number"
+          formControlName="quantity"
+          id="quantity"
+          placeholder="Quantity"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter Service Unit Price</label>
+        <input
+          clrInput type="number"
+          formControlName="unitPrice"
+          id="unitPrice"
+          placeholder="Unit Price"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="openServiceModal(false)">Cancel</button>
+    <button [disabled]="serviceFormGroup.invalid" type="submit" class="btn btn-primary" (click)="submit()" >Add</button>
+  </div>
+</clr-modal>

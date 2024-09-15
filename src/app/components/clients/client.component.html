@@ -16,7 +16,8 @@
     <clr-dg-cell>{{ client.mol }}</clr-dg-cell>
     <clr-dg-cell>{{ client.address }}</clr-dg-cell>
     <clr-dg-cell>
-      <button class="btn btn-danger" (click)="deleteClient(client)" >Delete</button>
+      <button class="btn" (click)="openServiceHistory(client)">Service History</button>
+      <button class="btn btn-danger" (click)="deleteClient(client)">Delete</button>
     </clr-dg-cell>
   </clr-dg-row>
 
@@ -91,5 +92,31 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline" (click)="openModal(false)">Cancel</button>
     <button [disabled]="addClientForm.invalid" type="submit" class="btn btn-primary" (click)="submit()" >Add</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="serviceHistoryModel">
+  <h3 class="modal-title">Services History Information</h3>
+  <div class="modal-body">
+    <clr-datagrid>
+      <clr-dg-column>Invoice Number</clr-dg-column>
+      <clr-dg-column>Service Name</clr-dg-column>
+      <clr-dg-column>Quantity</clr-dg-column>
+      <clr-dg-column>Unit Price</clr-dg-column>
+      <clr-dg-column>Date</clr-dg-column>
+
+      <clr-dg-row *ngFor="let service of services">
+        <clr-dg-cell>{{ service.invoiceNumber }}</clr-dg-cell>
+        <clr-dg-cell>{{ service.name }}</clr-dg-cell>
+        <clr-dg-cell>{{ service.quantity }}</clr-dg-cell>
+        <clr-dg-cell>{{ service.unitPrice }}</clr-dg-cell>
+        <clr-dg-cell>{{ service.date }}</clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>{{ services?.length }} services</clr-dg-footer>
+    </clr-datagrid>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)=" serviceHistoryModel = false">exit</button>
   </div>
 </clr-modal>

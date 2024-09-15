@@ -99,7 +99,17 @@ export class CompanySettingsComponent {
 
     const formData = this.addCompanyForm.value;
     const companyId =  uuidv4();
-    const company = { id: companyId, ...formData } as Company;
+    let company = { id: companyId, ...formData } as Company;
+
+    let currentTaxNumber;
+
+    if (!formData.taxNumber) {
+      currentTaxNumber =  this.addCompanyForm.get('taxNumber')?.value;
+    }
+
+    if (currentTaxNumber) {
+      company = {...company, taxNumber: currentTaxNumber};
+    }
 
     try {
       if (this.companies.find(client => client.taxNumber === formData.taxNumber)) {
@@ -108,6 +118,7 @@ export class CompanySettingsComponent {
         await this.companyService.addCompany(company);
       }
       await this.getCompanies();
+      this.onCompanyChange(company.taxNumber);
     } catch (error) {
       console.error('Error saving company', error);
     }

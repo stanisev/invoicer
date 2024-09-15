@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client } from '../models/client';
 import { IDBPDatabase, openDB } from 'idb';
 import { Service } from '../models/service.model';
+import {v4 as uuidv4} from "uuid";
 
 @Injectable({
   providedIn: 'root'
