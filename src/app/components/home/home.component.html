@@ -1,0 +1,140 @@
+<div class="home-content">
+  <clr-alert [clrAlertType]="'danger'" [clrAlertAppLevel]="true" *ngIf="clients.length === 0">
+    <clr-alert-item>
+      <span class="alert-text">You need to have at least on client.</span>
+      <div class="alert-actions">
+        <button class="btn alert-action" routerLink="./../clients" routerLinkActive="active">Go to Clients</button>
+      </div>
+    </clr-alert-item>
+  </clr-alert>
+  <form clrForm [formGroup]="invoiceForm" class="clr-form custom-form" *ngIf="clients.length > 0">
+    <div class="custom-card">
+      <label class="custom-input-label">Enter a invoice number</label>
+      <div class="custom-sub-card">
+        <clr-input-container>
+          <input
+            clrInput type="number"
+            formControlName="numberControl"
+            id="invoiceNumber"
+            placeholder="Enter invoice number"/>
+          <clr-control-error>This field is required!</clr-control-error>
+          >
+        </clr-input-container>
+      </div>
+    </div>
+
+    <div class="custom-card">
+      <label class="custom-input-label">Select a client</label>
+      <div class="custom-sub-card">
+        <clr-select-container>
+          <select clrSelect formControlName="clientsControl" required>
+            <option *ngFor="let client of clients" [value]="client.taxNumber">
+              {{ client.companyName }}
+            </option>
+          </select>
+          <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+        </clr-select-container>
+      </div>
+      <div class="custom-panels">
+        <app-panel class="custom-panels-item"  *ngFor="let entry of fieldEntries.values()"
+                   [panelLabel]="entry.key | titlecaseWithSpaces"
+                   [panelData]="entry.value">
+        </app-panel>
+      </div>
+    </div>
+
+
+    <div class="custom-card">
+      <label class="custom-input-label">Select a currency</label>
+      <div class="custom-sub-card">
+        <clr-select-container>
+          <select clrSelect formControlName="currencyControl" required>
+            <option *ngFor="let currency of currencies" [value]="currency.id" [disabled]="currency.disabled">{{ currency.name }} [{{ currency.id }}]</option>
+          </select>
+          <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+        </clr-select-container>
+      </div>
+    </div>
+    <button class="btn" (click)="generatePDF()">Download Invoice</button>
+  </form>
+
+  <div id="pdf-content" class="home-invoice-content" *ngIf="invoiceNumber">
+    <div class="home-invoice-content-row">
+      <div class="home-invoice-content-column">
+        <app-invoice class="invoice-number"
+                     [panelLabel]="'Invoice'"
+                     [marginValue]="4"
+                     [panelLabelSize]="24"
+                     [panelDataSize]="16"
+                     [panelLabelFontBold]="600"
+                     [panelData]="'№ ' + invoiceNumber"
+                     [panelSubDataItems]="['ORIGINAL']">
+        </app-invoice>
+
+        <app-invoice class="invoice-date"
+                     [panelLabel]="'Date of issue'"
+                     [marginValue]="4"
+                     [panelLabelSize]="16"
+                     [panelDataSize]="12"
+                     [panelLabelFontBold]="300"
+                     [panelData]="currentDate | date: 'short'">
+        </app-invoice>
+
+        <div class="divider"></div>
+
+        <app-invoice class="invoice-recipient"
+                     [panelLabel]="'RECIPIENT:'"
+                     [marginValue]="4"
+                     [panelLabelSize]="14"
+                     [panelLabelFontBold]="600">
+        </app-invoice>
+
+        <app-invoice class="invoice-date" *ngFor="let entry of fieldEntries.values()"
+                     [panelLabel]="entry.key | titlecaseWithSpaces"
+                     [panelLabelSize]="16"
+                     [panelDataSize]="12"
+                     [panelLabelFontBold]="300"
+                     [panelData]="entry.value">
+        </app-invoice>
+      </div>
+
+      <div class="home-invoice-content-column">
+        <app-invoice class="invoice-supplier"
+                     [panelLabel]="'SUPPLIER:'"
+                     [panelLabelSize]="14"
+                     [panelLabelFontBold]="600">
+        </app-invoice>
+        <app-invoice class="invoice-supplier" *ngFor="let entry of companyData.values()"
+                     [panelLabel]="entry.key | titlecaseWithSpaces"
+                     [panelLabelSize]="14"
+                     [panelDataSize]="12"
+                     [marginValue]="4"
+                     [panelLabelFontBold]="300"
+                     [panelData]="entry.value">
+        </app-invoice>
+
+      </div>
+    </div>
+
+    <div class="invoice-table" *ngIf="client">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Service Name</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let service of client.services">
+          <td>{{ service.name }}</td>
+          <td>{{ service.quantity }}</td>
+          <td>{{ service.unitPrice }} {{ this.currency }}</td>
+          <td>{{ service.quantity * service.unitPrice }} {{ this.currency }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

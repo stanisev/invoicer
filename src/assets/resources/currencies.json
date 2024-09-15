@@ -1,0 +1,17 @@
+[
+  {
+    "id": "BGN",
+    "disabled": false,
+    "name": "Bulgarian Levas"
+  },
+  {
+    "id": "USD",
+    "disabled": false,
+    "name": "United States Dollar"
+  },
+  {
+    "id": "EUR",
+    "disabled": false,
+    "name": "Euro"
+  }
+]

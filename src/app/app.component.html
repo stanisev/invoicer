@@ -1,0 +1,36 @@
+<div class="main-container">
+  <header class="header header-color">
+    <div class="branding">
+      <a routerLink="/" routerLinkActive="active" class="company-header">
+        <img class="company-logo" src="assets/company-logo.png"/>
+        <span class="title title-color">{{ companyName }}</span>
+      </a>
+    </div>
+  </header>
+  <div class="content-container content-color">
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" [clrVerticalNavCollapsed]="false">
+      <div class="menu-spacer">
+        <span class="menu-header">Board</span>
+        <a clrVerticalNavLink routerLink="/invoices" routerLinkActive="active">
+          <cds-icon clrVerticalNavIcon shape="contract"></cds-icon>
+          Invoices
+        </a>
+        <a clrVerticalNavLink routerLink="./clients" routerLinkActive="active">
+          <cds-icon clrVerticalNavIcon shape="users"></cds-icon>
+          Clients
+        </a>
+      </div>
+
+      <div class="menu-spacer">
+        <span class="menu-header is-collapsed">Other</span>
+        <a clrVerticalNavLink routerLink="./company-settings" routerLinkActive="active">
+          <cds-icon clrVerticalNavIcon shape="cog"></cds-icon>
+          Settings
+        </a>
+      </div>
+    </clr-vertical-nav>
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

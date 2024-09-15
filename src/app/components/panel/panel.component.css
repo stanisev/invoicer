@@ -1,0 +1,27 @@
+:host {
+  --clr-card-border-radius: 16px;
+  --clr-card-box-shadow-color: grey;
+
+
+  .panel-label {
+    font-size: 12px;
+    margin: 16px 24px;
+    color: #8a958b;
+  }
+
+  .panel-data {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 16px 32px;
+    color: #5C715E;
+  }
+
+
+  .panel-card {
+    padding: 16px 0;
+    border-radius: 16px;
+    background: #fafafa;
+    margin: 8px 8px;
+  }
+
+}

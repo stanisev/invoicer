@@ -1,0 +1,107 @@
+<button type="button" class="btn" (click)="openModal(true, false)">Add a new Company</button>
+<clr-datagrid>
+  <clr-dg-column>Company Name</clr-dg-column>
+  <clr-dg-column>Tax Number</clr-dg-column>
+  <clr-dg-column>Name</clr-dg-column>
+  <clr-dg-column>Email</clr-dg-column>
+  <clr-dg-column>MOL</clr-dg-column>
+  <clr-dg-column>Address</clr-dg-column>
+  <clr-dg-column>Action</clr-dg-column>
+
+  <clr-dg-row *ngFor="let company of companies">
+    <clr-dg-cell>{{ company.companyName }}</clr-dg-cell>
+    <clr-dg-cell>{{ company.taxNumber }}</clr-dg-cell>
+    <clr-dg-cell>{{ company.name }}</clr-dg-cell>
+    <clr-dg-cell>{{ company.email }}</clr-dg-cell>
+    <clr-dg-cell>{{ company.mol }}</clr-dg-cell>
+    <clr-dg-cell>{{ company.address }}</clr-dg-cell>
+    <clr-dg-cell>
+      <button type="button" class="btn btn-outline" (click)="openModal(true, true, company)">Edit</button>
+      <button type="button" class="btn btn-danger" (click)="deleteCompany(company)">Delete</button>
+    </clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{ companies.length }} companies</clr-dg-footer>
+</clr-datagrid>
+
+<clr-select-container>
+  <label class="custom-input-label">Current primary company: {{primaryCompanyTaxNumber}}</label>
+  <label class="custom-input-label">Select a primary company</label>
+  <select clrSelect [(ngModel)]="primaryCompanyTaxNumber" (ngModelChange)="onCompanyChange($event)" required>
+    <option *ngFor="let company of companies" [value]="company.taxNumber">
+      {{ company.companyName }}
+    </option>
+  </select>
+  <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+</clr-select-container>
+
+<clr-modal [(clrModalOpen)]="modalOpen">
+  <h3 class="modal-title">Company Information</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="addCompanyForm" clrLayout="horizontal" clrLabelSize="4">
+      <clr-input-container>
+        <label class="custom-input-label">Enter a company tax number</label>
+        <input
+          clrInput type="text"
+          formControlName="taxNumber"
+          id="taxNumber"
+          placeholder="Enter tax number"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter a company name</label>
+        <input
+          clrInput type="text"
+          formControlName="companyName"
+          id="companyName"
+          placeholder="Enter Company Name"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter a company email</label>
+        <input
+          clrInput type="email"
+          formControlName="email"
+          id="email"
+          placeholder="Enter Company Email"/>
+        <clr-control-error *ngIf="email?.hasError('required') && email?.touched">
+          This field is required!
+        </clr-control-error>
+        <clr-control-error *ngIf="email?.hasError('email') && email?.touched">
+          Please enter a valid email address!
+        </clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter a Company Owner's Name</label>
+        <input
+          clrInput type="text"
+          formControlName="name"
+          id="name"
+          placeholder="Enter Company Owner Name"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter a Company MOL</label>
+        <input
+          clrInput type="text"
+          formControlName="mol"
+          id="companyMol"
+          placeholder="Enter Company MOL"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label class="custom-input-label">Enter a Company Address</label>
+        <input
+          clrInput type="text"
+          formControlName="address"
+          id="companyAddress"
+          placeholder="Enter Company Address"/>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="openModal(false)">Cancel</button>
+    <button [disabled]="addCompanyForm.invalid" type="submit" class="btn btn-primary" (click)="submit()" >{{ modalButtonLabel }}</button>
+  </div>ç≈
+</clr-modal>

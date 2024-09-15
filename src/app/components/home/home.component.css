@@ -1,0 +1,165 @@
+:host {
+  --clr-card-border-radius: 16px;
+  --clr-card-box-shadow-color: grey;
+
+  .custom-input-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 16px 24px;
+    color: #5C715E;
+  }
+
+  clr-input-container {
+    display: flex;
+    flex-direction: column;
+
+    margin: 4px;
+  }
+
+  clr-select-container {
+    display: flex;
+    flex-direction: column;
+
+    margin: 4px;
+  }
+
+  .custom-card {
+    padding: 16px;
+    border-radius: 16px;
+    background: #f1f1f1;
+    margin-bottom: 32px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 2px;
+  }
+
+  .custom-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10)
+  }
+
+
+  .custom-sub-card {
+    border-radius: 10px;
+    background: #fafafa;
+    height: 64px;
+    margin: 16px 16px 32px;
+  }
+
+  .card-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  form {
+    width: 70%;
+  }
+
+  .home-invoice-content {
+    display: flex;
+    flex-direction: column;
+
+    background: white;
+    width: 50vh;
+
+    padding: 32px 0;
+    border-radius: 16px;
+    margin: 8px 16px;
+    margin-bottom: 32px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 2px;
+  }
+
+  .home-invoice-content:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10)
+  }
+
+  .home-invoice-content-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-invoice-content-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    align-items: baseline;
+  }
+
+  .custom-panels {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .custom-panels-item {
+    flex-basis: auto;
+    flex-grow: 4;
+  }
+
+  .custom-form {
+    max-width: 50vh;
+  }
+
+
+  .invoice-table {
+    max-width: 1000px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    border: none;
+  }
+
+  thead th {
+    background-color: #ffffff;
+    color: #bcbcbc;
+    text-align: left;
+    padding: 15px;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #bcbcbc;
+  }
+
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    color: #333;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  tbody tr td:nth-child(1) {
+    font-weight: 500;
+  }
+
+  table td, table th {
+    text-align: left;
+  }
+
+
+  .divider {
+    margin: 32px;
+    height: 1px;
+    background: rgba(92, 113, 94, 0.2)
+  }
+
+}

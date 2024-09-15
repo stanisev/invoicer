@@ -1,0 +1,34 @@
+:host {
+  .header-color {
+    background: #F2F9F1;
+  }
+
+  .title-color {
+    color:black;
+  }
+
+  .company-logo {
+    width: 64px;
+    height: 64px;
+  }
+
+   .company-header {
+    margin-left: 0;
+  }
+
+  .menu-spacer {
+    margin-bottom: 24px;
+  }
+
+  .menu-header {
+    color: #5C715E;
+    margin: 8px;
+    font-size: 12px;
+  }
+
+  .content-color {
+    background: #F9F9F9;
+  }
+
+
+}

@@ -1,0 +1,12 @@
+<div class="panel-card" [ngStyle]="{ 'margin': marginValue }" *ngIf="panelLabel">
+  <label class="panel-label"  [ngStyle]="{ 'font-size': panelLabelSize + 'px', 'font-weight': panelLabelFontBold, 'color': 'black' } ">{{ panelLabel }}</label>
+  <div *ngIf="panelData">
+    <label class="panel-data" [ngStyle]="{ 'font-size': panelDataSize + 'px' }">{{ panelData }}</label>
+  </div>
+
+  <div *ngIf="panelSubDataItems.length >= 1">
+    <div *ngFor="let item of panelSubDataItems">
+      <label class="panel-data" [ngStyle]="{ 'font-size': panelDataSize + 'px' }">{{ item }}</label>
+    </div>
+  </div>
+</div>
