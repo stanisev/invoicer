@@ -24,6 +24,19 @@
     </div>
 
     <div class="custom-card">
+      <label class="custom-input-label">Select a currency</label>
+      <div class="custom-sub-card">
+        <clr-select-container>
+          <select clrSelect formControlName="currencyControl" required>
+            <option value="" disabled selected>{{ currencies[0].name }} [{{ currencies[0].id }}]</option>
+            <option *ngFor="let currency of currencies" [value]="currency.id" [disabled]="currency.disabled">{{ currency.name }} [{{ currency.id }}]</option>
+          </select>
+          <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+        </clr-select-container>
+      </div>
+    </div>
+
+    <div class="custom-card">
       <label class="custom-input-label">Select a client</label>
       <div class="custom-sub-card">
         <clr-select-container>
@@ -53,19 +66,6 @@
       </div>
     </div>
 
-
-    <div class="custom-card">
-      <label class="custom-input-label">Select a currency</label>
-      <div class="custom-sub-card">
-        <clr-select-container>
-          <select clrSelect formControlName="currencyControl" required>
-            <option value="" disabled selected>{{ currencies[0].name }} [{{ currencies[0].id }}]</option>
-            <option *ngFor="let currency of currencies" [value]="currency.id" [disabled]="currency.disabled">{{ currency.name }} [{{ currency.id }}]</option>
-          </select>
-          <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
-        </clr-select-container>
-      </div>
-    </div>
     <button class="btn" (click)="generatePDF()">Download Invoice</button>
   </form>
 
